@@ -92,7 +92,7 @@ function setup() {
     wall50 = createSprite(475, 300, 50, 5);
 
 
-
+    edges = createEdgeSprites()
 
 }
 
@@ -124,7 +124,7 @@ function draw() {
     } else if (keyDown("L")) {
         changePosition3(0, -4)
     } else if (keyDown("I")) {
-        changePosition(0, -4)
+        changePosition3(0, -4)
     } else if (keyDown("K")) {
         changePosition3(0, 4)
     }
@@ -288,6 +288,24 @@ function draw() {
     ball3.collide(wall50);
 
     drawSprites();
+
+    ball.collide(edges[0])
+    ball.collide(edges[1])
+    ball.collide(edges[2])
+    ball.collide(edges[3])
+
+
+    ball2.collide(edges[0])
+    ball2.collide(edges[1])
+    ball2.collide(edges[2])
+    ball2.collide(edges[3])
+
+
+    ball3.collide(edges[0])
+    ball3.collide(edges[1])
+    ball3.collide(edges[2])
+    ball3.collide(edges[3])
+
 }
 
 function readposition(data) {
@@ -302,29 +320,48 @@ function readposition2(data) {
     ball2.y = position2.y;
 }
 
-// function readposition3(data) {
-//     position3 = data.val();
-//     ball3.x = position3.x;
-//     ball3.y = position3.y;
-// }
+function readposition3(data) {
+    position3 = data.val();
+    ball3.x = position3.x;
+    ball3.y = position3.y;
+}
 
 function changePosition(x, y) {
-    database.ref("ball/position").set({
-        'x': position.x + x,
-        'y': position.y + y
-    })
+    ball.x = ball.x + x
+    ball.y = ball.y + y
+    writePosition(ball.x, ball.y)
 }
 
 function changePosition2(x, y) {
-    database.ref("ball2/position2").update({
-        'x': position2.x + x,
-        'y': position2.y + y
-    })
+    ball2.x = ball2.x + x
+    ball2.y = ball2.y + y
+    writePosition2(ball2.x, ball2.y)
 }
 
 function changePosition3(x, y) {
-    database.ref("ball3/position").update({
-        'x': position3.x + x,
-        'y': position3.y + y
+    ball3.x = ball3.x + x
+    ball3.y = ball3.y + y
+    writePosition3(ball3.x, ball3.y)
+}
+
+function writePosition(x, y) {
+
+    database.ref("ball/position").set({
+        'x': x,
+        'y': y
+    })
+}
+
+function writePosition2(x, y) {
+    database.ref("ball2/position2").update({
+        'x': x,
+        'y': y
+    })
+}
+
+function writePosition3(x, y) {
+    database.ref("ball3/position3").update({
+        'x': x,
+        'y': y
     })
 }
